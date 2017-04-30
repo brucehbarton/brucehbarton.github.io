@@ -3,17 +3,29 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<title>D3 v4 - force layout</title>
+<title>Adjective/noun adjacencies in David Copperfield</title>
 <style>
-html, body, #graph {
+h1, p, li {
+    font-family: sans-serif;
+}
+
+#graph {
     width: 900px;
     height: 500px;
+    border: solid #ccc;
 }
 </style>
 </head>
-
 <body>
+<h1>Adjective/noun adjacencies in David Copperfield</h1>
 <div id="graph"></div>    
+<p>Notes:</p>
+<ul>
+<li>Circle size is proportional to adjacencies count.</li>
+<li>Fill color classifies nouns and adjectives: blue = adjective; orange = noun.</li>
+<li>Mouse-over tooltip describes to node.</li>
+<li>Nodes can be dragged to fixed positions.</li>
+</ul>
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
 <script>
@@ -110,7 +122,7 @@ html, body, #graph {
                 return colorCircles(d[columnForColors])
             })
             .on("mouseover", function(d) {
-                tooltip.html(d.label + "<br>connections: " + d[columnForRadius]);
+                tooltip.html(d.label + "<br>adjacencies: " + d[columnForRadius]);
                 return tooltip.style("visibility", "visible");
             })
             .on("mousemove", function() {
@@ -153,12 +165,13 @@ html, body, #graph {
         function dragged(d) {
             d.fx = d3.event.x;
             d.fy = d3.event.y;
+            tooltip.style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 10) + "px");
         }
         
         function dragended(d) {
             if (!d3.event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
+            //d.fx = null;
+            //d.fy = null;
         } 
                 
     }    
