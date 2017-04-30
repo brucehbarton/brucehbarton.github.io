@@ -21,11 +21,15 @@ h1, p, li {
 <div id="graph"></div>    
 <p>Notes:</p>
 <ul>
-<li>Circle size is proportional to adjacencies count.</li>
+<li>112 nodes; 425 links.
+<li>Node circle radius is proportional to the node's adjacencies count.</li>
 <li>Fill color classifies nouns and adjectives: blue = adjective; orange = noun.</li>
-<li>Mouse-over tooltip describes to node.</li>
+<li>Mouse-over tooltip describes the node.</li>
 <li>Nodes can be dragged to fixed positions.</li>
+<li>Built with D3.forceSimulation v.4.6.0.</li>	
 </ul>
+<p>Data source:  <a href="https://networkdata.ics.uci.edu/data.php?id=4">Copperfield Word Adjacencies</a>
+University of California-Irvine, Network Data Repository (downloaded 5/28/2017).</p>
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
 <script>
@@ -85,7 +89,7 @@ h1, p, li {
         
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.index }))
-            .force("collide",d3.forceCollide( function(d){return scaleRadius(d[columnForRadius]) + 8 }).iterations(16) )
+            .force("collide",d3.forceCollide( function(d){return scaleRadius(d[columnForRadius]) + 10 }).iterations(16) )
             .force("charge", d3.forceManyBody().strength([-50]))
             .force("center", d3.forceCenter(chartWidth / 2, chartHeight / 2))
             .force("y", d3.forceY(0))
@@ -122,7 +126,8 @@ h1, p, li {
                 return colorCircles(d[columnForColors])
             })
             .on("mouseover", function(d) {
-                tooltip.html(d.label + "<br>adjacencies: " + d[columnForRadius]);
+                var wordType = d.value == 1 ? "noun" : "adjective";
+                tooltip.html(d.label + " (" + wordType + ")<br>adjacencies: " + d[columnForRadius]);
                 return tooltip.style("visibility", "visible");
             })
             .on("mousemove", function() {
