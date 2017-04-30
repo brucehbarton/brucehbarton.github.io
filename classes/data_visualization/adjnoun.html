@@ -10,8 +10,8 @@ h1, p, li {
 }
 
 #graph {
-    width: 900px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     border: solid #ccc;
 }
 </style>
@@ -89,7 +89,7 @@ University of California-Irvine, Network Data Repository (downloaded 5/28/2017).
         
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.index }))
-            .force("collide",d3.forceCollide( function(d){return scaleRadius(d[columnForRadius]) + 10 }).iterations(16) )
+            .force("collide",d3.forceCollide( function(d){return scaleRadius(d[columnForRadius]) + 13 }).iterations(16) )
             .force("charge", d3.forceManyBody().strength([-50]))
             .force("center", d3.forceCenter(chartWidth / 2, chartHeight / 2))
             .force("y", d3.forceY(0))
@@ -114,7 +114,7 @@ University of California-Irvine, Network Data Repository (downloaded 5/28/2017).
             .data(data.links)
             .enter()
             .append("line")
-            .attr("stroke", "black")
+            .attr("stroke", "gray")
         
         var node = svg.append("g")
             .attr("class", "nodes")
